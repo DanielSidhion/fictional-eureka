@@ -1,0 +1,38 @@
+name: Manual section organisation
+on:
+  schedule:
+    # - cron: 0 8 * * *
+    - cron: 0 0 15 */6 *
+
+jobs:
+  create_issue:
+    name: Create periodic manual section organisation issue
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create periodic manual section organisation issue
+        run: |
+          gh issue create \
+            --title "$TITLE" \
+            --assignee "$ASSIGNEES" \
+            --label "$LABELS" \
+            --body "$BODY"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TITLE: High-level manual section organisation
+          ASSIGNEES: danielsidhion
+          LABELS: docs-team,maintenance,scheduled,docs-team/manuals
+          BODY: |
+            # Reorganise sections in the manuals
+
+            This is a scheduled issue to remind you to go through the manuals and look at their sections with the intention of reorganising them.
+
+            - Which sections could be moved to another manual?
+            - Which sections have duplicate content between the manuals and should be deduplicated?
+            - Which sections should be broken down, moved to a different part of the same manual, or joined into another section?
+
+            Once you go through the manuals and answer all questions above, you'll have a list of sections and what to do with them.
+            Do that work.
+            Close this issue when the work is done.
